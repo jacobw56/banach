@@ -1,0 +1,25 @@
+.shape-button {
+    height: 80px;
+    width: 80px;
+    background-color: hsla(198, 80%, 36%, 0.6);
+    border-radius: 8px;
+    border-style: none;
+    outline: none;
+    position: relative;
+    text-align: center;
+}
+
+.shape-button:hover {
+    background-color: hsla(198, 80%, 36%, 0.8);
+}
+
+.shape-button-selected {
+    height: 80px;
+    width: 80px;
+    background-color: hsl(198, 80%, 36%);
+    border-radius: 8px;
+    border-style: none;
+    outline: none;
+    position: relative;
+    text-align: center;
+}
