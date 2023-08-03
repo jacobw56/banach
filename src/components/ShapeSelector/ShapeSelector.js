@@ -8,7 +8,7 @@ import squareSmallWhite from "../../assets/sq_sm_white.png";
 import triangleLargeWhite from "../../assets/tri_lg_white.png";
 import triangleMediumWhite from "../../assets/tri_md_white.png";
 import triangleSmallWhite from "../../assets/tri_sm_white.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const shapeMatrix = [
   {
@@ -76,21 +76,26 @@ const shapeMatrix = [
 const ShapeSelector = ({ dispatch }) => {
   const [matrix, setMatrix] = useState(shapeMatrix);
 
-  useEffect(() => {
-    console.log(JSON.stringify(matrix));
-  }, [matrix]);
-
-  const handleClick = (action, x, y) => {
-    let tempMatrix = shapeMatrix;
-    tempMatrix[x].buttons[y].selected = true;
-    console.log("Old matrix: " + JSON.stringify(matrix));
+  const handleClick = (action) => {
     dispatch({ type: action });
-    return setMatrix(tempMatrix);
+    setMatrix(
+      matrix.map((row) => {
+        console.log(row);
+        return {
+          ...row,
+          buttons: row.buttons.map((button) => {
+            return button.action === action
+              ? { ...button, selected: true }
+              : { ...button };
+          }),
+        };
+      })
+    );
   };
 
   return (
     <div>
-      {matrix.map((shape, x) => (
+      {shapeMatrix.map((shape, x) => (
         <div
           style={{
             display: "flex",
@@ -103,10 +108,10 @@ const ShapeSelector = ({ dispatch }) => {
             <ShapeButton
               x={x}
               y={y}
+              shape={shape.shape}
               handleClick={handleClick}
               action={button.action}
               image={button.image}
-              selected={button.selected}
               key={button.action}
             />
           ))}
